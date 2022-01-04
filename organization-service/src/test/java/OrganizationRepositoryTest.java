@@ -3,8 +3,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.util.Assert;
-import pl.piomin.services.organization.model.Organization;
-import pl.piomin.services.organization.repository.OrganizationRepository;
+import services.organization.model.Organization;
+import services.organization.repository.OrganizationRepository;
 
 import java.util.List;
 
