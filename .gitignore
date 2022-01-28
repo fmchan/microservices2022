@@ -1,2 +1,7 @@
 /.project
 /.settings/
+/.idea
+/.gradle
+/*/build
+/*/bin
+.vscode

@@ -1,0 +1,14 @@
+config-service:
+  image: spring17/config-service
+  hostname: config-service
+  volumes:
+    - ./config-service/config:/app/config
+  ports:
+    - "8088:8088"
+discovery-service:
+  image:  spring17/discovery-service
+  hostname: discovery-service
+  links:
+    - "config-service"
+  ports:
+    - "8061:8061"
