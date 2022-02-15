@@ -1,48 +1,67 @@
-config-service:
-  image: spring17/config-service
-  hostname: config-service
-  volumes:
-    - ./config-service/config:/app/config
-  ports:
-    - "8088:8088"
-discovery-service:
-  image:  spring17/discovery-service
-  hostname: discovery-service
-  links:
-    - "config-service"
-  ports:
-    - "8061:8061"
-employee-service:
-  image:  spring17/employee-service
-  hostname: employee-service
-  links:
-    - "config-service"
-    - "discovery-service"
-  ports:
-    - "8010:8010"
-organization-service:
-  image:  spring17/organization-service
-  hostname: organization-service
-  links:
-    - "config-service"
-    - "discovery-service"
-    - "employee-service"
-  ports:
-    - "8020:8020"
-department-service:
-  image:  spring17/department-service
-  hostname: department-service
-  links:
-    - "config-service"
-    - "discovery-service"
-    - "employee-service"
-  ports:
-    - "8030:8030"
-gateway-service:
-  image:  spring17/gateway-service
-  hostname: gateway-service
-  links:
-    - "config-service"
-    - "discovery-service"
-  ports:
-    - "8060:8060"
+version: '3'
+
+services:
+  config-service:
+    image: spring17/config-service
+    hostname: config-service
+    #volumes:
+    #  - ./config-service/config:/app/config
+    ports:
+      - "8088:8088"
+  discovery-service:
+    image:  spring17/discovery-service
+    hostname: discovery-service
+    links:
+      - "config-service"
+    ports:
+      - "8061:8061"
+  employee-service:
+    image:  spring17/employee-service
+    hostname: employee-service
+    links:
+      - "config-service"
+      - "discovery-service"
+    ports:
+      - "8010:8010"
+  organization-service:
+    image:  spring17/organization-service
+    hostname: organization-service
+    links:
+      - "config-service"
+      - "discovery-service"
+      - "employee-service"
+    ports:
+      - "8020:8020"
+  department-service:
+    image:  spring17/department-service
+    hostname: department-service
+    links:
+      - "config-service"
+      - "discovery-service"
+      - "employee-service"
+    ports:
+      - "8030:8030"
+  reactive-service:
+    image:  spring17/reactive-service
+    hostname: reactive-service
+    links:
+      - "config-service"
+      - "discovery-service"
+    depends_on:
+      - mongo
+    ports:
+      - "8040:8040"
+  gateway-service:
+    image:  spring17/gateway-service
+    hostname: gateway-service
+    links:
+      - "config-service"
+      - "discovery-service"
+    ports:
+      - "8060:8060"
+  mongo:
+    image: mongo
+    container_name: mongo
+    hostname: mongo
+    ports:
+      - 27017:27017

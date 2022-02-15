@@ -35,6 +35,12 @@ spring:
             - Path=/organization/**
           filters:
             - RewritePath=/organization/(?<path>.*), /$\{path}
+        - id: reactive-service
+          uri: lb://reactive-service
+          predicates:
+            - Path=/reactive/**
+          filters:
+            - RewritePath=/reactive/(?<path>.*), /$\{path}
         - id: openapi
           uri: http://localhost:${server.port}
           predicates:
@@ -64,25 +70,31 @@ spring:
           enabled: true
       routes:
         - id: employee-service
-          uri: lb://employee-service
+          uri: http://employee-service:8010
           predicates:
             - Path=/employee/**
           filters:
             - RewritePath=/employee/(?<path>.*), /$\{path}
         - id: department-service
-          uri: lb://department-service
+          uri: http://department-service:8030
           predicates:
             - Path=/department/**
           filters:
             - RewritePath=/department/(?<path>.*), /$\{path}
         - id: organization-service
-          uri: lb://organization-service
+          uri: http://organization-service:8020
           predicates:
             - Path=/organization/**
           filters:
             - RewritePath=/organization/(?<path>.*), /$\{path}
+        - id: reactive-service
+          uri: http://reactive-service:8040
+          predicates:
+            - Path=/reactive/**
+          filters:
+            - RewritePath=/reactive/(?<path>.*), /$\{path}
         - id: openapi
-          uri: http://gateway-service:${server.port}
+          uri: http://localhost:${server.port}
           predicates:
             - Path=/v3/api-docs/**
           filters:
